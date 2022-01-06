@@ -1,14 +1,12 @@
 {
-  "name": "stream.data",
-  "displayName": "stream.data",
+  "name": "estrngaming",
+  "displayName": "estrngaming",
   "expo": {
-    "name": "stream.data",
-    "scheme": "stream.data",
-    "slug": "streamData",
+    "name": "estrngaming",
+    "scheme": "estrngaming",
+    "slug": "estrngaming",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "androidStatusBar": {
       "barStyle": "light-content",
       "translucent": true,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
-import { Fontisto } from '@expo/vector-icons'
+import { Fontisto } from '@expo/vector-icons';
 import { ActivityIndicator, Alert, Modal, View } from 'react-native';
 
 import { useAuth } from '../../hooks/useAuth';
@@ -8,17 +8,17 @@ import { useAuth } from '../../hooks/useAuth';
 import LoginBannerImg from '../../assets/images/login.svg';
 import LogoImg from '../../assets/images/logo.svg';
 
-import { 
+import {
   Container,
   Content,
-  LoginBanner, 
-  LoginInfo, 
-  Header, 
-  Partner, 
-  Description, 
+  LoginBanner,
+  LoginInfo,
+  Header,
+  Partner,
+  Description,
   SignInButton,
   SignInButtonIcon,
-  SignInButtonText 
+  SignInButtonText,
 } from './styles';
 
 export function SignIn() {
@@ -26,67 +26,84 @@ export function SignIn() {
   const theme = useTheme();
 
   // creates a function to handle sign in
+  async function handleSignIn() {
     // try to call and wait signIn
+    try {
+      // set isLoggingIn to true
+      // call signIn
+      await signIn();
+    } catch (error) {
+      // catch error
+      // show error message
+      Alert.alert(
+        'Error Singing In',
+        'Ocorreu um erro ao tentar fazer login, tente novamente.'
+      );
+    }
+
     // if fails, display an Alert with the title "Erro SignIn" and message "Ocorreu um erro ao tentar logar no app"
 
-  return (
-    <Container
-      from={{
-        opacity: 0,
-        scale: 0.9,
-      }}
-      animate={{
-        opacity: 1,
-        scale: 1,
-      }}
-      exit={{
-        opacity: 0,
-        scale: 0.9,
-      }}
-    >
-      <Content>
-        <LoginBanner>
-          <LoginBannerImg width="100%" />
-        </LoginBanner>
-
-        <LoginInfo>
-          <Header>
-            <LogoImg />
-            <Partner>by twitch</Partner>
-          </Header>
-
-          <Description>
-            Veja dados{'\n'}
-            interessantes sobre{'\n'}
-            o mundo da Twitch
-          </Description>
-
-          {/* <SignInButton onPress={}>
-            <SignInButtonIcon>
-              Verify if isLoggingIn is true
-              If it is, show an ActivityIndicator
-              Otherwise, show Fontisto's twitch icon
-            </SignInButtonIcon>
-
-            <SignInButtonText>
-              Verify if isLoggingIn is true
-              If it is, show "Entrando..."
-              Otherwise, show "Entrar com Twitch"
-            </SignInButtonText>
-          </SignInButton> */}
-        </LoginInfo>
-      </Content>
-
-      <Modal 
-        animationType="fade"
-        visible={isLoggingIn}
-        statusBarTranslucent
-        transparent
+    return (
+      <Container
+        from={{
+          opacity: 0,
+          scale: 0.9,
+        }}
+        animate={{
+          opacity: 1,
+          scale: 1,
+        }}
+        exit={{
+          opacity: 0,
+          scale: 0.9,
+        }}
       >
-        <View
-          style={{ flex: 1, backgroundColor: 'rgba(14, 14, 16, 0.5)' }}
-        />
-      </Modal>
-    </Container>
-  );
+        <Content>
+          <LoginBanner>
+            <LoginBannerImg width="100%" />
+          </LoginBanner>
+
+          <LoginInfo>
+            <Header>
+              <LogoImg />
+              <Partner>by twitch</Partner>
+            </Header>
+
+            <Description>
+              Veja dados{'\n'}
+              interessantes sobre{'\n'}o mundo da Twitch
+            </Description>
+
+            <SignInButton onPress={handleSignIn}>
+              <SignInButtonIcon>
+                {isLoggingIn ? (
+                  <ActivityIndicator size={20} color={theme.colors.white} />
+                ) : (
+                  <Fontisto
+                    name="twitch"
+                    size={20}
+                    color={theme.colors.white}
+                    style={{ marginRight: 1 }}
+                  />
+                )}
+              </SignInButtonIcon>
+
+              <SignInButtonText>
+                {isLoggingIn ? 'Entrando...' : 'Entrar com Twitch'}
+              </SignInButtonText>
+            </SignInButton>
+          </LoginInfo>
+        </Content>
+
+        <Modal
+          animationType="fade"
+          visible={isLoggingIn}
+          statusBarTranslucent
+          transparent
+        >
+          <View style={{ flex: 1, backgroundColor: 'rgba(14, 14, 16, 0.5)' }} />
+        </Modal>
+      </Container>
+    );
+  }
 }
